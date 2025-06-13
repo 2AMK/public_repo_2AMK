@@ -1,4 +1,4 @@
-# 🎓 Amanda Ayumi Mikami – Portfólio de Análise de Dados e Ciência de Dados
+# Amanda Ayumi Mikami – Portfólio de Análise de Dados e Ciência de Dados
 
 Bem-vindo(a) ao meu repositório público! 
 
@@ -16,7 +16,7 @@ Sou recém-formada em Administração pela Universidade Federal de São Paulo (U
 
 ---
 
-## 🧠 Tecnologias e Ferramentas
+## 🛠 Tecnologias e Ferramentas
 
 - **Linguagens:** Python, R, SQL, Bash
 - **Bibliotecas:** Pandas, Matplotlib, Seaborn, Scikit-learn
