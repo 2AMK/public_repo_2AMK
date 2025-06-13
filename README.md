@@ -36,7 +36,7 @@ Sou recém-formada em Administração pela Universidade Federal de São Paulo (U
 
 ---
 
-## 📫 Contato
+## ✉ Contato
 
 - [LinkedIn](https://www.linkedin.com/in/amanda-ayumi-mikami-357118210/)
 - E-mail: oficial.aamikami.amk@gmail.com
