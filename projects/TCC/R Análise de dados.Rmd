@@ -1,0 +1,566 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code.
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*.
+
+# Análise de Dados
+
+```{r}
+install.packages('psych')
+install.packages('GGally')
+
+library(psych)
+library(ggplot2)
+library(tibble)
+library(dbplyr)
+library(tidyverse)
+library(GGally)
+library(svglite)
+library(readr)
+```
+
+
+```{r}
+df_encoded_original <- readRDS("Análise de Dados/df_encoded.Rda")
+
+
+glimpse(df_encoded_original)
+```
+```{r}
+df_encoded_ordinal_likert <- readRDS("Análise de Dados/df_encoded_ordinal_likert.Rda")
+
+glimpse(df_encoded_ordinal_likert)
+```
+
+```{r}
+#Renomeando as colunas para ficar mais sucinto
+
+library(dplyr)
+
+df_encoded <- df_encoded_original %>% rename(
+  sit_prof_Empreendedor = `situacao_profissional_Empreendedor/MEI`,
+  sit_prof_Estagio = situacao_profissional_Estágio,
+  sit_prof_Outro = situacao_profissional_Outro,
+  sit_prof_Autonomo = `situacao_profissional_Trabalho autônomo ou Freelancer`,
+  sit_prof_CLT = `situacao_profissional_Trabalho formal/CLT` ,
+  tipo_IES_Priv = tipo_IES_Privada,
+  tipo_IES_Pub = tipo_IES_Pública,
+  ano_ingresso = ano_ingresso,
+  turno_Diurno = Turno_Diurno,
+  turno_Noturno = Turno_Noturno,
+  modalidade_Hibrida = modalidade_curso_Híbrida,
+  modalidade_Presencial = modalidade_curso_Presencial,
+  modalidade_Remota = modalidade_curso_Remota,
+  ingresso_AC = `forma_ingresso_Ampla Concorrência`  ,
+  ingresso_Cota = forma_ingresso_Cota,
+  idade = Idade_Codificada,
+  genero_HomemCis = `Gênero_Homem Cis` ,
+  genero_HomemTrans = `Gênero_Homem Trans`,
+  genero_MulherCis = `Gênero_Mulher Cis`  ,
+  genero_NaoBinario = `Gênero_Não Binário/Outro`  ,
+  renda_familiar = renda_familiar,
+  estado_civil_Outro = estado_civil_Outro,
+  estado_civil_Separado = `estado_civil_Separado/ Divorciado`  ,
+  estado_civil_Solteiro = estado_civil_Solteiro,
+  estado_civil_UniaoCasado = `estado_civil_União estável/ Casado`  ,
+  cor_Amarelo = `Cor_Etnia_Amarelo ou de Origem Oriental` ,
+  cor_Branco = Cor_Etnia_Branco,
+  cor_Negro = Cor_Etnia_Negro,
+  cor_Pardo = Cor_Etnia_Pardo,
+  horas_trabalho = horas_trabalho,
+  exp_profissional = exp_profissional,
+  forma_trab_Hibrido = forma_atividade_Híbrida,
+  forma_trab_Presencial = forma_atividade_Presencial,
+  forma_trab_Remoto = `forma_atividade_Remota ou Home office`,
+  deslocamento = tempo_deslocamento,
+  horas_estudo = horas_estudo,
+  satisfacao_estudo = satisfacao_tempo_estudo,
+  trab_interf_estudo = trabalho_interfere_estudo,
+  escolhe_demandas = escolhe_demandas,
+  sincroniza_tarefas = sincronizar_tarefas,
+  negociacao_flex = negociacao_flexibilidade,
+  manter_barreiras = manter_barreiras_fisicas,
+  espacos_neutros = momentos_espacos_neutros,
+  tempo_pessoal = reservar_tempo_si_mesmo,
+  apoio_familia = apoio_familiares,
+  apoio_inst = apoio_institucional,
+  metas_prazos = metas_claras_prazos,
+  planejamento_freq = planejamento_frequente,
+  prioridade_tarefas = prioridade_importante_urgente,
+  horario_tarefas = determinar_horário_tempo_tarefas,
+  organizar_tempo = organizar_tempo,
+  ajuste_planejamento = identificar_problemas_ajuste_planejamento,
+  conciliar_vida = conciliar_dominio_vida,
+  delegar_tarefas = delegar_tarefas,
+  usar_ferramentas = utilizar_ferramentas,
+  organizar_estudo = organizar_tempo_estudo,
+  planejamento_estudo = planejamento_estudo,
+  gasto_tempo_estudo = considerar_gastos_tempo_estudo,
+  cronograma_estudo = elaborar_cronograma_estudo,
+  local_estudo = escolhe_local_estudo,
+  distracoes = identifica_distracoes,
+  tecnicas_pomodoro = utiliza_tecnicas_pomodoro,
+  matriz_eisenhower = utiliza_matriz_eisenhower,
+  tecnicas_memorizacao = utiliza_tecnicas_memorizacao
+)
+
+glimpse(df_encoded)
+
+```
+
+
+```{r}
+# Preparar os dados para mixedCor
+df_encoded_numeric <- df_encoded
+
+# Converter fatores ordenados para numérico
+ordered_cols <- sapply(df_encoded_numeric, is.ordered)
+df_encoded_numeric[ordered_cols] <- lapply(df_encoded_numeric[ordered_cols], 
+                                         function(x) as.numeric(as.character(x)))
+
+# Converter lógicos para numérico
+logical_cols <- sapply(df_encoded_numeric, is.logical)
+df_encoded_numeric[logical_cols] <- lapply(df_encoded_numeric[logical_cols], as.numeric)
+
+# Verificar tipos de dados
+print(sapply(df_encoded_numeric, class))
+
+# Tentar mixedCor novamente
+try({
+  corrs <- psych::mixedCor(data = df_encoded_numeric,
+                          c = "horas_trabalho",
+                          p = names(df_encoded_numeric)[ordered_cols],
+                          d = names(df_encoded_numeric)[logical_cols],
+                          correct = 0.5,
+                          method = 'spearman')
+})
+                        
+
+
+```
+
+```{r}
+
+
+# Primeiro, vamos verificar a estrutura do objeto corrs
+str(corrs)
+
+# Criando um df contendo dcorrs$rho
+df_encoded_corrsrho = data.frame(corrs$rho)
+
+# Visualização ajustada
+options(repr.plot.width=15, repr.plot.height=15)
+
+# Tentar com a matriz de correlação correta
+GGally::ggcorr(data = NULL,
+       cor_matrix = df_encoded_corrsrho,  # Alterado de corrs[["cors"]] para corrs$rho
+       size = 3,
+       hjust = 1,
+       nbreaks = 10,
+       name = "Correlação",
+  #     geom = 'circle',
+       label = FALSE,
+       label_color = "black",
+       digits = 2,
+       label_round = 2,
+       label_size = 3,
+       layout.exp = 15 ,
+       angle = 0,
+       palette = 'PuOr'
+
+) +
+  theme(legend.position = "right",
+        plot.title = element_text(size = 20,hjust = 0.5),
+        axis.text.x = element_text(size = 15, angle = 45, hjust = 1, vjust = 1.2),
+        axis.text.y = element_text(size = 15, margin = margin(r = 10)),
+        plot.margin = margin(20, 20, 20, 20, "pt")
+  ) +
+#  scale_color_brewer(palette = "RdYlBu", direction = +1) +
+  ggtitle("Matriz de correlação mista")
+
+# Salvar o gráfico
+ggsave("correlacao_mixed.svg", width = 15, height = 15, dpi = 150)
+ggsave("correlacao_mixed2.png", width = 15, height = 15, dpi = 150)
+
+``` 
+```{r}
+# Carregar pacotes
+library(GGally)
+library(ggplot2)
+
+# 1) Crie uma cópia para manipular
+temp <- abs(df_encoded_corrsrho)
+
+# 2) Zerar a diagonal (para não considerar a correlação consigo mesma)
+diag(temp) <- 0
+
+# 3) Identificar colunas que tenham pelo menos uma correlação >= limite
+variaveis_significativas <- apply(temp >= 0.4, 2, any)
+
+# 4) Filtrar a matriz original (não a "temp")
+corrs_filtrado <- df_encoded_corrsrho[variaveis_significativas, variaveis_significativas]
+
+# Verificar estrutura após filtragem
+str(corrs_filtrado)
+
+# Criar a nova matriz de correlação visualmente mais compacta
+ggplot_corr <- GGally::ggcorr(
+       data = NULL,
+       cor_matrix = corrs_filtrado,
+       size = 3,
+       hjust = 1,
+       nbreaks = 10,
+       name = "Correlação",
+       label = FALSE,
+       label_color = "black",
+       digits = 2,
+       label_round = 2,
+       label_size = 3,
+       layout.exp = 15,
+       angle = 0,
+       palette = 'PuOr'
+) +
+  theme(legend.position = "right",
+        plot.title = element_text(size = 20, hjust = 0.5),
+        axis.text.x = element_text(size = 15, angle = 45, hjust = 1, vjust = 1.2),
+        axis.text.y = element_text(size = 15, margin = margin(r = 10)),
+        plot.margin = margin(20, 20, 20, 20, "pt")
+  ) +
+  ggtitle("Matriz de Correlação Filtrada")
+
+# Salvar o gráfico
+ggsave("correlacao_filtrada_teste.svg", plot = ggplot_corr, width = 12, height = 12, dpi = 150)
+ggsave("correlacao_filtrada.png", plot = ggplot_corr, width = 12, height = 12, dpi = 150)
+
+
+```
+```{r}
+library(ggcorrplot)
+
+
+```
+
+```{r}
+# Visualização ajustada
+options(repr.plot.width=10, repr.plot.height=10)
+
+# Definir breaks com menos pontos para melhor visualização
+breaks_scale <- seq(-1, 1, by = 0.25)  # Aumentei o intervalo para 0.25
+
+heatmap_corr <- ggcorrplot(
+  corrs_filtrado,
+  type = "full",
+  lab = FALSE,
+  lab_size = 1,
+  outline.color = "darkgray",
+  colors = c("#2166AC", "white", "#B2182B"),
+  title = "Matriz de Correlação Mista Filtrada",
+  legend.title = "Correlação"
+) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(size = 14, hjust = 0.5),
+    axis.text.x = element_text(size = 10, angle = 90),
+    axis.text.y = element_text(size = 11),
+    plot.margin = margin(20, 20, 20, 20, "pt"),
+    # Ajustes específicos para a legenda
+    legend.key.width = unit(2, "cm"),    # Aumenta a largura da barra de legenda
+    legend.key.height = unit(0.5, "cm"), # Ajusta a altura da barra de legenda
+    legend.text = element_text(size = 8, margin = margin(r = 10), vjust = -3), # Aumenta o tamanho do texto e adiciona margem
+    legend.title = element_text(size = 9), # Aumenta o tamanho do título da legenda
+    legend.margin = margin(t = 10, b = 10) # Adiciona margem acima e abaixo da legenda
+  ) +
+  scale_fill_gradientn(
+    colors = c("#2166AC", "white", "#B2182B"),
+    breaks = breaks_scale,
+    labels = format(breaks_scale, digits = 2),
+    limits = c(-1, 1),
+    guide = guide_colorbar(
+      barwidth = 15,        # Largura da barra de cores
+      barheight = 0.5,      # Altura da barra de cores
+      nbin = 100,           # Número de bins para suavizar a transição de cores
+      draw.ulim = TRUE,     # Desenha linha no limite superior
+      draw.llim = TRUE,     # Desenha linha no limite inferior
+      frame.colour = "darkgray", # Cor da borda da legenda
+      ticks = TRUE          # Mostra as marcações
+    )
+  ) +
+  ggtitle("Matriz de Correlação Mista Filtrada")
+
+# Salvar o gráfico
+ggsave("correlacao_filtrada_2.svg", plot = heatmap_corr, width = 12, height = 12, dpi = 150)
+ggsave("correlacao_filtrada.png", plot = heatmap_corr, width = 12, height = 12, dpi = 150)
+```
+```{r}
+# Visualização ajustada
+options(repr.plot.width=10, repr.plot.height=10)
+
+# Definir breaks com menos pontos para melhor visualização
+breaks_scale <- seq(-1, 1, by = 0.25)  # Aumentei o intervalo para 0.25
+
+heatmap_corr <- ggcorrplot(
+  df_encoded_corrsrho,
+  type = "full",
+  lab = FALSE,
+  lab_size = 1,
+  outline.color = "darkgray",
+  colors = c("#2166AC", "white", "#B2182B"),
+  title = "Matriz de Correlação Mista",
+  legend.title = "Correlação"
+) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(size = 14, hjust = 0.5),
+    axis.text.x = element_text(size = 10, angle = 90),
+    axis.text.y = element_text(size = 11),
+    plot.margin = margin(20, 20, 20, 20, "pt"),
+    # Ajustes específicos para a legenda
+    legend.key.width = unit(2, "cm"),    # Aumenta a largura da barra de legenda
+    legend.key.height = unit(0.5, "cm"), # Ajusta a altura da barra de legenda
+    legend.text = element_text(size = 8, margin = margin(r = 10), vjust = -3), # Aumenta o tamanho do texto e adiciona margem
+    legend.title = element_text(size = 9), # Aumenta o tamanho do título da legenda
+    legend.margin = margin(t = 10, b = 10) # Adiciona margem acima e abaixo da legenda
+  ) +
+  scale_fill_gradientn(
+    colors = c("#2166AC", "white", "#B2182B"),
+    breaks = breaks_scale,
+    labels = format(breaks_scale, digits = 2),
+    limits = c(-1, 1),
+    guide = guide_colorbar(
+      barwidth = 15,        # Largura da barra de cores
+      barheight = 0.5,      # Altura da barra de cores
+      nbin = 100,           # Número de bins para suavizar a transição de cores
+      draw.ulim = TRUE,     # Desenha linha no limite superior
+      draw.llim = TRUE,     # Desenha linha no limite inferior
+      frame.colour = "darkgray", # Cor da borda da legenda
+      ticks = TRUE          # Mostra as marcações
+    )
+  ) +
+  ggtitle("Matriz de Correlação Mista")
+
+# Salvar o gráfico
+ggsave("heatmap_corr2.svg", plot = heatmap_corr, width = 12, height = 12, dpi = 150)
+ggsave("heatmap_corr2.png", plot = heatmap_corr, width = 12, height = 12, dpi = 150)
+```
+
+
+```{r}
+'# Carregar pacotes necessários
+library(GGally)
+library(ggplot2)
+
+# Definir o limite mínimo para considerar uma correlação significativa
+limite_cor <- 0.7
+
+# Criar uma máscara booleana para identificar colunas que tenham pelo menos uma 
+# correlação significativa com outras variáveis (excluindo a diagonal)
+variaveis_significativas <- apply(abs(corrs$rho) >= limite_cor, 2, any)
+
+# Filtrar a matriz de correlação para manter apenas variáveis relevantes
+corrs_filtrado <- corrs$rho[variaveis_significativas, variaveis_significativas]
+
+# Criar a matriz de correlação visual
+ggplot_corr <- GGally::ggcorr(
+  data = NULL,
+  cor_matrix = corrs_filtrado,
+  size = 3,
+  hjust = 1,
+  nbreaks = 10,
+  name = "Correlação",
+  label = TRUE,  # Alterado para TRUE para mostrar os valores
+  label_color = "black",
+  digits = 2,
+  label_round = 2,
+  label_size = 3,
+  layout.exp = 15,
+  angle = 0,
+  palette = 'PuOr'
+) +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(size = 20, hjust = 0.5),
+    axis.text.x = element_text(size = 15, angle = 45, hjust = 1, vjust = 1.2),
+    axis.text.y = element_text(size = 15, margin = margin(r = 10)),
+    plot.margin = margin(20, 20, 20, 20, "pt")
+  ) +
+  ggtitle("Matriz de Correlação Filtrada")
+
+# Salvar o gráfico em diferentes formatos
+ggsave("correlacao_filtrada.svg", plot = ggplot_corr, width = 12, height = 12, dpi = 150)
+ggsave("correlacao_filtrada.png", plot = ggplot_corr, width = 12, height = 12, dpi = 150)'''
+```
+
+
+
+
+```{r}
+# Carregar pacotes
+library(GGally)
+library(ggplot2)
+library(ggcorrplot)
+library(igraph)
+library(ggraph)
+library(reshape2)
+
+# 1. Heatmap Simplificado -------------------------------------------------
+
+# Visualização ajustada
+options(repr.plot.width=10, repr.plot.height=10)
+
+heatmap_corr <- ggcorrplot(
+  corrs$rho,
+  #hc.order = TRUE, # Organiza variáveis por similaridade
+  type = "full",
+  lab = FALSE, # Exibe valores
+  lab_size = 1,
+  outline.color = "darkgray",
+  colors = c("#2166AC", "white", "#B2182B"), # Azul -> Branco -> Laranja
+  title = "Mapa de Calor das Correlações Mistas",
+  legend.title = "Correlação"
+)+
+  theme(legend.position = "right",
+        plot.title = element_text(size = 10, hjust = 0.5),
+        axis.text.x = element_text(size = 5, angle = 45),
+        axis.text.y = element_text(size = 5), #, margin = margin(r = 10)),
+        plot.margin = margin(20, 20, 20, 20, "pt")
+  ) +
+  ggtitle("Mapa de Calor das Correlações Mistas") +
+  scale_color_brewer(palette = "RdYlBu", direction = -1)
+
+ggsave("heatmap_corr.svg", plot = heatmap_corr, width = 10, height = 10, dpi = 300)
+```
+
+
+
+```{r}
+# 2. Matriz de correlação com valores -------------------------------------
+matrix_corr <- ggcorrplot(
+  corrs$rho,
+  type = "full",
+  lab = TRUE, # Exibir valores dentro dos quadrados
+  colors = c("#B2182B", "white", "#2166AC"), # Vermelho -> Branco -> Azul
+  title = "Matriz de Correlação com Valores",
+  legend.title = "Correlação"
+)
+
+ggsave("matrix_corr.svg", plot = matrix_corr, width = 10, height = 8, dpi = 300)
+```
+
+
+```{r}
+# 3. Rede de Correlações --------------------------------------------------
+# Criar um limite para correlações relevantes
+limite_cor <- 0.4  # Mostrar apenas correlações acima de 0.4
+
+# Criar uma tabela de arestas para rede
+cor_data <- as.data.frame(as.table(corrs$rho))
+cor_data <- subset(cor_data, abs(Freq) >= limite_cor & Var1 != Var2)
+
+# Criar rede
+grafo <- graph_from_data_frame(cor_data, directed = FALSE)
+
+rede_corr <- ggraph(grafo, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = abs(Freq), edge_width = abs(Freq)), color = "gray50") +
+  geom_node_point(size = 5, color = "#2E86C1") +
+  geom_node_text(aes(label = name), repel = TRUE, size = 4) +
+  theme_void() +
+  ggtitle("Rede de Correlações Significativas")
+
+ggsave("rede_corr.png", plot = rede_corr, width = 10, height = 8, dpi = 300)
+```
+
+
+```{r}
+# 4. Gráfico de Barras das Maiores Correlações ---------------------------
+# Filtrar as maiores correlações
+top_corrs <- cor_data[order(-abs(cor_data$Freq)),][1:20,]  # Pegando as 20 maiores
+
+bar_corr <- ggplot(top_corrs, aes(x = reorder(paste(Var1, Var2, sep = " - "), abs(Freq)), y = Freq, fill = Freq)) +
+  geom_col() +
+  coord_flip() +
+  scale_fill_gradient2(low = "red", mid = "white", high = "blue", midpoint = 0) +
+  labs(title = "Top 20 Maiores Correlações", x = "Variáveis", y = "Correlação") +
+  theme_minimal()
+
+ggsave("bar_corr.png", plot = bar_corr, width = 10, height = 8, dpi = 300)
+
+```
+
+
+
+```
+
+
+```{r} 
+#Ordinal Likert 
+
+
+corrs = psych::polychoric(df_encoded_ordinal_likert)
+
+# Verifique a dimensão da matriz e ajuste os nomes das colunas
+if (ncol(corrs[["rho"]]) == length(colnames(df_encoded_ordinal_likert))) {
+  colnames(corrs[["rho"]]) <- colnames(df_encoded_ordinal_likert)
+  rownames(corrs[["rho"]]) <- colnames(df_encoded_ordinal_likert)
+} else {
+  stop("As dimensões da matriz de correlação não correspondem ao número de colunas do dataframe.")
+}
+
+# Definir dimensões maiores para o dispositivo gráfico
+options(repr.plot.width=15, repr.plot.height=15)  # Ajuste esses valores conforme necessário
+
+# Criar o gráfico com ajustes
+GGally::ggcorr(data = NULL,
+       cor_matrix = corrs[["rho"]],
+       size = 4,                    # Aumentado para círculos maiores
+       hjust = 1,
+       nbreaks = 7,
+       label = TRUE,
+       label_color = "black",
+       digits = 2,
+       label_round = 2,
+       label_size = 3,             # Aumentado o tamanho dos rótulos
+       layout.exp = 5,              # Aumentado para expandir mais o layout
+       angle = 0
+) +
+  theme(legend.position = "right",
+        plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(size = 15, angle = 45, hjust = 1, vjust = 1.2),
+        axis.text.y = element_text(size = 15, margin = margin(r = 10)),
+        plot.margin = margin(20, 20, 20, 20, "pt")
+  ) +
+  scale_color_brewer(palette = "RdYlBu", direction = -1) +
+  ggtitle("Matriz de correlação mista de correlação com método de correlação policórica")
+
+# Se estiver salvando em arquivo, use:
+ggsave("correlacao_polychoric.png", width = 15, height = 15, dpi = 150)
+```
+
+
+
+```{r}
+library(corrplot)
+
+# Visualização usando corrplot
+corrplot(corrs$rho,
+         method = "color",
+         type = "upper",
+         order = "hclust",
+         addCoef.col = "black",
+         tl.col = "black",
+         tl.srt = 45,
+         number.cex = 0.7,
+         tl.cex = 0.7,
+         diag = TRUE)
+
+ggsave("correlacao_mixed_teste2_cade_vc.svg", width = 15, height = 15, dpi = 150)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
