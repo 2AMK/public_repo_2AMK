@@ -30,8 +30,8 @@ Sou recém-formada em Administração pela Universidade Federal de São Paulo (U
 
 - [x] DSA Academy - Fundamentos de Data Science e IA
 - [x] Codeacademy - Learn SQL
+- [X] FreeCodeCamp - Relational Database (SQL + Bash)
 
-- [ ] FreeCodeCamp - Relational Database (SQL + Bash)
 - [ ] DSA Academy: Python para Data Science
 
 ---
