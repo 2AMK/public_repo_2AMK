@@ -22,7 +22,7 @@ Sou recém-formada em Administração pela Universidade Federal de São Paulo (U
 - **Bibliotecas:** Pandas, Matplotlib, Seaborn, Scikit-learn
 - **BI & Visualização:** Power BI
 - **Versionamento:** Git & GitHub
-- **Outros:** Terminal (Bash), Notebooks Jupyter
+- **Outros:** Terminal (Bash), Notebooks Jupyter, Excel
 
 ---
 
@@ -39,6 +39,27 @@ Sou recém-formada em Administração pela Universidade Federal de São Paulo (U
 ## 🧱 Projetos
 
 - Trabalho de Conclusão de Curso (UNIFESP) com análises feitas em Python e R (disponível em `projects/`)
+
+---
+
+## 🚧 Roadmap e as futuras ideias
+
+Abaixo são as ideias e projetos que pretendo explorar como parte da minha trajetória de aprendizado. Sujeito a mudanças conforme meus interesses e experiências.
+
+### 🎯 Roadmap de projetos
+
+- [ ] Desenvolver o meu site no GitHub
+- [ ] Dashboard com Power Bi
+- [ ] Webscraping com Python
+- [ ] Automação com Python
+- [ ] Análise exploratória e Machine Learning com Python
+- [ ] Integração entre Python e SQL
+
+### 📖 Roadmap de conhecimento (Estudos e Aprendizados)
+
+- [ ] Git e Github
+- [ ] Reforço em Python
+- [ ] Banco de dados não relacional (Mongo DB)
 
 ---
 ## ✉ Contato
