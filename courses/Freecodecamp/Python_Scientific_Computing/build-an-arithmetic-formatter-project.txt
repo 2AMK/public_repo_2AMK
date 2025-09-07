@@ -1,0 +1,71 @@
+** start of main.py **
+
+def arithmetic_arranger(problems, show_answers=False):
+    top_line = []
+    bottom_line = []
+    dash_line = []
+    answers_line = []
+
+    # Checking if problems supplied to the function is not more than 5
+    if len(problems) > 5:
+        return 'Error: Too many problems.'
+    
+    for problem in problems:
+        # Split in many parts:
+        parts = problem.split(" ")
+        operand1, operator, operand2 = parts
+        
+        # Check if is only addition or subtraction
+        if operator not in ("+", "-"):
+            return "Error: Operator must be '+' or '-'."
+        
+        # Check if operand only contain digits
+        if not operand1.isdigit() or not operand2.isdigit():
+            return 'Error: Numbers must only contain digits.'
+
+        # Check if operand has only max of four digits
+        if len(operand1) > 4 or len(operand2) >4:
+            return 'Error: Numbers cannot be more than four digits.'
+
+        # If show_answer is true
+        if show_answers == True:
+            if operator == "+":
+                answer = int(operand1) + int(operand2)
+            else:
+                answer = int(operand1) - int(operand2)
+        else:
+            answer = ""
+        
+        # Defining width
+        width = max(len(operand1), len(operand2)) + 2
+
+        # Defining top, dash and answer
+        top = operand1.rjust(width)
+        bottom = operator + operand2.rjust(width-1)
+        dash = "-"*width
+        answer_str = str(answer).rjust(width)
+        
+        #Append into line 
+        top_line.append(top)
+        bottom_line.append(bottom)
+        dash_line.append(dash)
+        answers_line.append(answer_str)
+
+    # Joining all in one string
+    arranged = "    ".join(top_line) + "\n" + "    ".join(bottom_line) + "\n" + "    ".join(dash_line) 
+    
+    if show_answers == True:
+        arranged += "\n" + "    ".join(answers_line)
+
+    return arranged
+
+
+
+
+#arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])
+
+
+#print(f'\n{arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])}')
+
+** end of main.py **
+
