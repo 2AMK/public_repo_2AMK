@@ -6,5 +6,6 @@ Para compreender esse fenômeno, a pesquisa adotou uma abordagem mista, com cole
 
 O trabalho em sua íntegra, de quase 140 páginas, estará disponível a partir de 2026 no respositório público da Universidade Federal de São Paulo (UNIFESP) onde você poderá conferir com todas detalhes como foi o meu trabalho. 
 
-> ⚠️ Aviso importante sobre os dados coletados
+>⚠️ Aviso importante sobre os dados coletados.
+>
 >Esta pesquisa teve finalidade exclusivamente educacional e de aprendizado. Todos os dados foram anonimizados para garantir o sigilo e a privacidade dos participantes, e não estão disponíveis neste repositório.

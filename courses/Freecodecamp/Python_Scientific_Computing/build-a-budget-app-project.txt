@@ -1,0 +1,140 @@
+** start of main.py **
+
+class Category():
+    def __init__(self, category):
+        self.name = category
+        self.category = category
+        self.ledger = []
+
+    def __str__(self):
+        cat_str = ''
+    
+        # Pegar o título
+        cat_str += self.category.center(30,"*")
+        cat_str += '\n'
+
+        # Pegar os outputs
+        for operation in self.ledger:
+            description = operation['description'][:23]
+            amount = f"{operation['amount']:.2f}"
+            cat_str += f'{description:<23}{amount:>7}\n'
+
+        # Pegar o total da categoria
+        cat_str += f'Total: {self.get_balance()}'
+
+        return cat_str
+
+    def deposit(self, amount, description = ''):
+        # Fazer o depósito
+        to_deposit = {
+            'amount':amount,
+            'description':description
+        }
+
+        self.ledger.append(to_deposit)
+
+
+
+    def withdraw(self, amount, description = ''):
+        # Verificar se há fundo suficiente antes de efetuar a operação
+        if self.check_funds(amount) is True:
+            to_withdraw = {
+                'amount':-amount,
+                'description':description
+                }
+            self.ledger.append(to_withdraw)
+
+            return True
+
+        # Se não há fundo suficiente para efetuar
+        else:
+            return False
+
+    def get_balance(self):
+        # Faz soma de todos os valores
+        balance = sum(item['amount'] for item in self.ledger)
+        return balance
+
+    def transfer(self, amount, target):
+
+        # Verifica se o valor não for maior que o balanço
+        if self.check_funds(amount) is True:
+            self.withdraw(amount, description = f'Transfer to {target.category}')
+            target.deposit(amount,description = f'Transfer from {self.category}')
+            return True
+        else:
+            return False
+
+    def check_funds(self, amount):
+        # Verifica se o balanço for menor do que o valor
+        if self.get_balance() < amount:
+            return False
+        else:
+            return True
+
+
+def create_spend_chart(categories):
+
+    total = 0
+    # Pegar o total de todas as categorias
+    for category in categories:
+        total += abs(sum([operation['amount'] for operation in category.ledger if operation['amount'] < 0]))
+
+    # Pegar porcentagem para cada categoria
+    cat_perc = {}
+    for category in categories:
+        category_perc = abs(sum([operation['amount'] for operation in category.ledger if operation['amount'] < 0]) / total * 100)
+        category_perc = int(category_perc // 10 * 10)  # arredonda para baixo
+        cat_perc.update({category: category_perc})
+
+    # Plotando o gráfico
+    final = "Percentage spent by category\n"
+
+    # Corpo do gráfico
+    length_list_cat = len(categories)
+    for level in range(100, -1, -10):
+        line = f"{level:>3}|"
+        for perc in cat_perc.values():
+            if perc >= level:
+                line += " o "
+            else:
+                line += "   "
+        line += " "  # apenas 1 espaço no final
+        final += line + "\n"
+
+    # Linha divisória
+    dash_line = "    " + ("---" * length_list_cat) + "-"
+    final += dash_line + "\n"
+
+    # Nomes das categorias
+    categories_name = [category.name for category in categories]
+    max_length = max(len(name) for name in categories_name)
+
+    for i in range(max_length):
+        label = "     "  # 5 espaços iniciais
+        for name in categories_name:
+            if i < len(name):
+                label += name[i] + "  "
+            else:
+                label += "   "
+        final += label + "\n"   # não adicione espaços extras aqui
+
+    return final.rstrip("\n")
+
+
+
+food = Category('Food')
+food.deposit(1000, 'deposit')
+food.withdraw(10.15, 'groceries')
+food.withdraw(15.89, 'restaurant and more food for dessert')
+clothing = Category('Clothing')
+food.transfer(50, clothing)
+clothing.withdraw(11)
+print(food)
+
+
+
+print(create_spend_chart([food, clothing]))
+
+** end of main.py **
+

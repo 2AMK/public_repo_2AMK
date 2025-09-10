@@ -1,0 +1,88 @@
+** start of main.py **
+
+def add_time(start, duration, start_day = None):    
+    week_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    # Descompor start
+    time_12hr = start.split(' ')
+
+    # Descompor em horas e minutos
+    hr_12hrs = time_12hr[0].split(':')
+
+
+    # Caso seja "PM"
+    if time_12hr[1] == 'PM':
+        if int(hr_12hrs[0]) == 12:
+            time_24hr = 12
+        else:
+            time_24hr = 12+int(hr_12hrs[0])
+        # Converter em minutos primeiro 
+        min_start = time_24hr*60 + int(hr_12hrs[1])
+
+    # Caso seja 12 AM (meia noite)
+    elif time_12hr[1] == "AM" and time_12hr[0]=='12':
+        hr_12hrs[0]= 0
+        min_start = int(hr_12hrs[0])*60 + int(hr_12hrs[1])
+
+    # Caso só seja AM
+    else:
+        min_start = int(hr_12hrs[0])*60 + int(hr_12hrs[1])  
+
+    # Converter a duração em minutos
+    duration_split = duration.split(':')
+    min_duration = int(duration_split[0])*60+ int(duration_split[1])
+
+    # Soma de start e duration
+    min_total_time = min_duration + min_start
+
+    # Convertendo de volta para horas e minutos
+    final_time_hr = (min_total_time//60)%24
+
+    final_time_min = str(min_total_time%60).zfill(2)
+
+    # Converter de volta para PM/AM
+    if final_time_hr == 0:
+        new_time = f'12:{final_time_min} AM'
+
+    elif final_time_hr < 12:
+        new_time = f'{final_time_hr}:{final_time_min} AM'
+
+    elif final_time_hr == 12:
+        new_time = f'{final_time_hr}:{final_time_min} PM'
+    
+    else:
+        pm_time_hr = final_time_hr - 12
+        new_time = f'{pm_time_hr}:{final_time_min} PM'
+
+    n_total_day = min_total_time//1440
+
+
+    # Se a função receber o input de start_day
+    if start_day:
+        start_day = (start_day.lower()).capitalize()
+        
+
+        # Ver em qual dia cai
+        day_index = week_days.index(start_day)
+        start_day_passed_index = (day_index+n_total_day)%7
+    
+        start_day_passed = week_days[start_day_passed_index]
+        new_time += f', {start_day_passed}'
+
+    # Em caso retornar no próximo dia
+    if n_total_day > 0:
+        if n_total_day <= 1:
+            print_day = ' (next day)'
+            new_time += print_day
+    # Em caso retornar vários dias depois
+        else:
+            print_day = f' ({n_total_day} days later)'
+            new_time += print_day
+
+    return new_time
+
+
+print(add_time('12:20 PM', '24:18', 'Thursday'))
+
+** end of main.py **
+
