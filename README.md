@@ -1,46 +1,37 @@
-# Amanda Ayumi Mikami – Portfólio de Análise de Dados e Ciência de Dados
+# Amanda Ayumi Mikami – Portfólio Técnico
 
 Bem-vindo(a) ao meu repositório público! 
 
-Sou recém-formada em Administração pela Universidade Federal de São Paulo (UNIFESP, 2025) e, neste espaço, compartilho minha trajetória de aprendizado, estudos técnicos e projetos práticos nas áreas de **Análise de Dados** e **Ciência de Dados**.
+Sou Analista Júnior de Remuneração, formada em Administração pela Universidade Federal de São Paulo (UNIFESP, 2025) e, neste espaço, compartilho minha trajetória de aprendizado, estudos técnicos e projetos práticos na engenharia de dados/automação interna. 
 
 > Este repositório está em constante atualização. Sinta-se à vontade para acompanhar meu progresso!
+
+
+## Principal stack
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+
 
 ## 🗂 Estrutura do Repositório
 
 - 📁 `docs/`: Anotações, reflexões e resumos técnicos dos estudos
 - 📁 `courses/`: Arquivos e práticas realizadas em cursos online
-- 📁 `notebooks/`: Notebooks Jupyter com análises, testes e explorações
 - 📁 `projects/`: Projetos de portfólio aplicando conceitos em dados reais
 - 📁 `scripts/`: Scripts úteis para tarefas como limpeza, automação ou visualização
 
----
+
 
 ## 🛠 Tecnologias e Ferramentas
 
-- **Linguagens:** Python, R, SQL, Bash
-- **Bibliotecas:** Pandas, Matplotlib, Seaborn, Scikit-learn
-- **BI & Visualização:** Power BI
+- **Linguagens:** Python, SQL, Google App Script
 - **Versionamento:** Git & GitHub
 - **Outros:** Terminal (Bash), Notebooks Jupyter, Excel
 
----
-
-## 📚 Cursos em Andamento/Concluídos
-
-- [x] DSA Academy - Fundamentos de Data Science e IA
-- [x] Codeacademy - Learn SQL
-- [X] FreeCodeCamp - Relational Database (SQL + Bash)
-
-- [ ] DSA Academy: Python para Data Science
-
----
-
-## 🧱 Projetos
+## 🧱 Projetos em destaque
 
 - Trabalho de Conclusão de Curso (UNIFESP) com análises feitas em Python e R (disponível em `projects/`)
+- [World Gen Engine](https://github.com/2AMK/Procedural-World-Simulation-Engine) - Projeto de geração procedural de mundos com Python (WIP).
+- [World Gen MCP](https://github.com/2AMK/Procedural-World-Simulation-Engine-MCP-Server) - Servidor para o World Gen Engine, escrito em Python.
 
----
 
 ## 🚧 Roadmap e as futuras ideias
 
@@ -48,20 +39,32 @@ Abaixo são as ideias e projetos que pretendo explorar como parte da minha traje
 
 ### 🎯 Roadmap de projetos
 
-- [ ] Desenvolver o meu site no GitHub
-- [ ] Dashboard com Power Bi
-- [ ] Webscraping com Python
-- [ ] Automação com Python
-- [ ] Análise exploratória e Machine Learning com Python
-- [ ] Integração entre Python e SQL
+- [ ] Desenvolver o meu site no GitHub Page
+- [ ] Desenvolver a automação de Gerador e Enviador de PDF em Python baseado em HTML
+- [ ] Desenvolver o "Ultimate Validator": um Framework genérico para validar e reconciliar bases de dados, aplicável a qualquer contexto de dados fictícios.
+- [ ] Desenvolver o Motor de ETL, Processamento e Geração de Dados configurável em Python
+
 
 ### 📖 Roadmap de conhecimento (Estudos e Aprendizados)
 
-- [ ] Git e Github
-- [ ] Reforço em Python
-- [ ] Banco de dados não relacional (Mongo DB)
+- [ ] SOLID Principle
+- [ ] Clean code
+- [ ] Designs patterns
+- [ ] Princípios de Engenharia de Software
 
----
+
+
+## 📚 Cursos em Andamento/Concluídos
+
+- [x] DSA Academy - Fundamentos de Data Science e IA
+- [x] Codeacademy - Learn SQL
+- [X] FreeCodeCamp - Relational Database (SQL + Bash)
+- [ ] Alura - Python: construindo sistemas eficientes com SOLID e Design Patterns
+
+
+
+
+
 ## ✉ Contato
 
 - [LinkedIn](https://www.linkedin.com/in/amanda-ayumi-mikami-357118210/)
