@@ -13,8 +13,9 @@ Sou Analista Júnior de Remuneração, formada em Administração pela Universid
 
 ## 🗂 Estrutura do Repositório
 
-- 📁 `docs/`: Anotações, reflexões e resumos técnicos dos estudos
+- 📁 `annotations/`: Anotações, reflexões e resumos técnicos dos estudos
 - 📁 `courses/`: Arquivos e práticas realizadas em cursos online
+- 📁 `mkdocs/`: Pasta exclusivo para MkDocs para criação de site pessoal
 - 📁 `projects/`: Projetos de portfólio aplicando conceitos em dados reais
 - 📁 `scripts/`: Scripts úteis para tarefas como limpeza, automação ou visualização
 

@@ -1,1 +1,58 @@
+
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtualenv
+venv/
+ENV/
+env/
+
+# IDE e editor
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# Logs e saídas
+*.log
+*.out
+*.err
+
+# Banco de dados
+*.db
+*.sqlite
+*.mariadb
+
+# Testes
+.coverage
+htmlcov/
+.pytest_cache/
+*.xml
+*.pyd
+
+# Geral
+.DS_Store
+ Thumbs.db
+
 .ipynb_checkpoints
+
+# Outros
+_backup.md

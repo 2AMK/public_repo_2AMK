@@ -1,0 +1,8 @@
+site_name: Site da Amanda Ayumi Mikami
+theme:
+    name: dracula
+    # favicon: (temporário ainda)
+nav:
+  - Início: index.md
+  - Projetos: projects.md
+  - Sobre mim: about_me.md
