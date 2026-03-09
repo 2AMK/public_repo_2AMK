@@ -5,4 +5,5 @@ theme:
 nav:
   - Início: index.md
   - Projetos: projects.md
+  - Roadmap: roadmap.md
   - Sobre mim: about_me.md
