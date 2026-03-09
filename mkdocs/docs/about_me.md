@@ -45,7 +45,6 @@ Segue a lista resumida dos principais projetos profissionais que foram realizado
 - É um projeto altamente experimental e complexo que integra o chatbot com a plataforma de dados e aplicativo de mensagens
 - Faz o uso dos tools calling para tornar as respostas mais inteligentes sem depender do "Chain of Responsibility"
 
-
 ### Motor de Processamento e Geração de Output
 - A rotina tinha vários problemas que eliminei:
     - O excessivo do tempo gasto no processo de busca manual repetitivo usando Excel (um problema extremamente comum em várias empresas!)
