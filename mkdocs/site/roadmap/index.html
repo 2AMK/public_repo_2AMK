@@ -80,6 +80,13 @@
                 </a>
             </li>
             <li class="drac-box">
+                <a href="./"
+                    class=" active 
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Roadmap
+                </a>
+            </li>
+            <li class="drac-box">
                 <a href="../about_me/"
                     class="
                     drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -111,6 +118,22 @@
                     <!-- block preview -->
                     <li class="nav-item">
                             
+        <div class="container">
+            <div class="row row-preview">
+                <div class="col">
+                    <a href="../projects/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="../about_me/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
                     </li>
                     <!--  endblock -->
 
@@ -141,7 +164,43 @@
             <!-- block content -->
                 <section class="p-md-5 section-content">
     <article>
-        <p></p>
+        <p><h1 id="roadmap">Roadmap</h1>
+<p>O roadmap é uma visão geral dos planos futuros para o desenvolvimento e evolução do projeto. Ele serve como um guia para os próximos passos e metas a serem alcançadas.</p>
+<h2 id="projetos-em-andamento">Projetos em Andamento</h2>
+<h3 id="procedural-world-gen-engine">Procedural World Gen Engine</h3>
+<p>É um projeto de geração procedural de mundos, inspirado em jogos como Minecraft e Dwarf Fortress. O objetivo é criar um motor de geração de mundos que seja capaz de gerar mundo de maneira procedural, com diferentes blocos. O motor será desenvolvido em Python e seu principal objetivo é ser uma ferramenta de aprendizado para entender os conceitos de engenharia de software. O projeto está em fase de WIP.</p>
+<p>É possível ver os detalhamentos e o código fonte do projeto no repositório do GitHub: <a href="https://github.com/2AMK/Procedural-World-Simulation-Engine">Procedural World Simulation Engine</a></p>
+<h2 id="projetos-futuros">Projetos Futuros</h2>
+<h3 id="ultimate-validator-de-dados">"Ultimate Validator" de dados</h3>
+<p>O "Ultimate Validator" é um projeto ambicioso que visa criar um sistema de validação de dados altamente eficiente e flexível. Ele será projetado para validar grandes volumes de dados de maneira rápida e precisa entre as diferentes bases de dados.</p>
+<p>O maior desafio que presenciei no dia a dia referente aos dados é assegurar que as duas ou mais bases tenham dados consistentes e confiáveis, além de garantir que as atualizações sejam refletidas corretamente em todas as bases. </p>
+<p>Suponha que queremos migrar uma base antiga em Excel onde contém notas dos alunos de todas as turmas em diferentes matérias e fórmulas matemáticas para gerar as médias finais e as notas pós-recuperações para uma base nova em SQL que será armazenado na nuvem. Esse processo todo contará com a equipe técnica.</p>
+<p>Mas como podemos garantir que a nova base tenha todos alunos com matrícula ativa na escola e que as regras de negócios para essa base de dados sejam respeitadas, de maneira que não custe muito dos nossos tempos validando manualmente cada linha?</p>
+<p>A gente também não quer que a nova base tenha as inconsistências nos dados podem levar a erros e problemas de integridade, o que pode afetar negativamente a tomada de decisões e a confiança nos sistemas escolares.</p>
+<p>O "Ultimate Validator" tem como objetivo resolver esse problema, garantindo que os dados sejam validados de forma eficaz e que as inconsistências sejam identificadas rapidamente e de maneira clara, permitindo que o time possa agir de forma proativa para corrigir quaisquer problemas.</p>
+<p>A ideia é que esse motor de validação seja capaz de lidar com diferentes tipos de dados e formatos, além de ser facilmente integrável com as bases de dados existentes e em diferentes contextos. Ele também deve ser escalável para lidar com grandes volumes de dados e ser flexível o suficiente para se adaptar às necessidades específicas de cada projeto.</p>
+<h4 id="funcionalidades">Funcionalidades</h4>
+<ul>
+<li>Validação de dados com 2 ou mais bases de dados</li>
+<li>Identificação de inconsistências de forma rápida e clara através dos logs</li>
+<li>Suporte para diferentes tipos de dados e formatos</li>
+<li>Integração fácil com bases de dados existentes, com a arquitetura modular e flexível</li>
+<li>Escalabilidade para lidar com grandes volumes de dados</li>
+<li>Flexibilidade para se adaptar às necessidades específicas de cada projeto</li>
+<li>Interface de usuário intuitiva para facilitar a configuração e monitoramento do processo de validação</li>
+<li>Relatórios detalhados sobre as inconsistências encontradas</li>
+</ul>
+<h2 id="algumas-ideias">Algumas ideias</h2>
+<h3 id="um-sistema-central-de-financa-pessoal">Um sistema "central" de finança pessoal</h3>
+<p>A ideia desse projeto é criar um sistema centralizado para gerenciar as finanças pessoais de maneira mais fácil e prático, sendo possível registrar ou mesmo exibir os valores de qualquer lugar onde estiver, seja em Telegram ou no Excel, e poder ter uma visão completa de sua situação atual, além dos investimentos.</p>
+<p>A ideia nasceu justamente devido à dificuldade de acompanhar e gerenciar as finanças, mesmo com Excel, já que é necessário abrir a planilha, atualizar os dados manualmente e não ter uma visão clara e rápida da situação financeira. Além disso, a planilha só é acessível em um dispositivo específico, o que pode ser um problema para quem precisa acessar as informações de diferentes lugares.</p>
+<p>O sistema pode incluir funcionalidades como orçamento, acompanhamento de despesas, metas financeiras e relatórios personalizados.
+- Também pode incluir o monitoramento das caixinhas/carteiras de investimento, para ter uma visão completa da situação financeira.
+- O sistema pode ser integrado com diferentes plataformas, como Telegram, para facilitar o acesso e atualização dos dados, e também com o Excel para quem prefere trabalhar com planilhas.
+- Também poderá usar API de bancos de dados externos como o Yahoo Finance para obter informações atualizadas sobre os investimentos e o mercado financeiro.
+- Também seguirá o princípio de "local first", ou seja, os dados serão armazenados localmente no dispositivo do usuário, garantindo a privacidade e segurança das informações financeiras.
+- Será necessário ter idempotência para evitar problemas de concorrência e garantir a integridade dos dados, especialmente quando o sistema for acessado de diferentes dispositivos ou plataformas.</p>
+<p>Esse projeto seria inicialmente para o uso pessoal. Ele pode ser desenvolvido utilizando Python para o backend, com uma interface de usuário simples e intuitiva, e integração com diferentes plataformas para facilitar o acesso e atualização dos dados. </p></p>
     </article>
 </section>
             <!-- endblock -->
